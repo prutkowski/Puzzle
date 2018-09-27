@@ -1,0 +1,7 @@
+<resources>
+    <style name="PuzzleImage">
+        <item name="android:layout_width">@dimen/puzzleWidth</item>
+        <item name="android:layout_height">@dimen/puzzleHeight</item>
+    </style>
+
+</resources>
