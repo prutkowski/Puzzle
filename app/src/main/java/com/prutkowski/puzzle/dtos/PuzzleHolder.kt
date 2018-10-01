@@ -1,6 +1,9 @@
 package com.prutkowski.puzzle.dtos
 
-import android.graphics.drawable.Drawable
+import com.prutkowski.puzzle.R
 
-class PuzzleHolder(var position: Int, var id: Int, var image: Drawable) {
+data class PuzzleHolder(var holderId: Int, var currentDrawableId: Int) {
+    fun isEmptyHolder(): Boolean {
+        return currentDrawableId == R.drawable.empty_puzzle
+    }
 }

@@ -1,8 +1,9 @@
 package com.prutkowski.puzzle
 
-import android.view.View
+import com.prutkowski.puzzle.dtos.MatrixCoordinates
+import com.prutkowski.puzzle.dtos.PuzzleHolder
 
 interface IBoardView {
-    fun setupPuzzleClickedListeners()
-    fun getPuzzleClickedListener(): View.OnClickListener
+    fun setupPuzzleHoldersClickListeners(puzzles: LinkedHashMap<MatrixCoordinates, PuzzleHolder>)
+    fun updateImagesBetweenHolders(fromHolder: PuzzleHolder, toHolder: PuzzleHolder)
 }
