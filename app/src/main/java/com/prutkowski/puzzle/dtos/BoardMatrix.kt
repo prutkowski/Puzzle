@@ -3,6 +3,8 @@ package com.prutkowski.puzzle.dtos
 class BoardMatrix(var puzzleMatrix: LinkedHashMap<MatrixCoordinates, PuzzleHolder>,
                   var puzzleIdsHashMap: LinkedHashMap<Int, MatrixCoordinates> = LinkedHashMap()) {
 
+    constructor() : this(LinkedHashMap(), LinkedHashMap())
+
     fun addPuzzleBoard(column: Int, holderId: Int, currentDrawableId: Int) {
         val currentCoords = MatrixCoordinates(column, 0)
         puzzleMatrix[currentCoords] = PuzzleHolder(holderId, currentDrawableId)
