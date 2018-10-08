@@ -1,4 +1,4 @@
-package com.prutkowski.puzzle.Exceptions
+package com.prutkowski.puzzle.exceptions
 
 import java.lang.Exception
 

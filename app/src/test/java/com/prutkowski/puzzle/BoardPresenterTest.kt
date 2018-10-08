@@ -1,6 +1,8 @@
 package com.prutkowski.puzzle
 
-import com.prutkowski.puzzle.Exceptions.InvalidBoardDimensionsException
+import com.prutkowski.puzzle.board.BoardPresenter
+import com.prutkowski.puzzle.board.ui.IBoardView
+import com.prutkowski.puzzle.exceptions.InvalidBoardDimensionsException
 import com.prutkowski.puzzle.dtos.BoardSets
 import com.prutkowski.puzzle.dtos.Dimension
 import com.prutkowski.puzzle.dtos.MatrixCoordinates

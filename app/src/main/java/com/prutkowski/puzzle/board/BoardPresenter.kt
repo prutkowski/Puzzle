@@ -1,23 +1,22 @@
-package com.prutkowski.puzzle
+package com.prutkowski.puzzle.board
 
-import com.prutkowski.puzzle.Exceptions.InvalidBoardDimensionsException
+import com.prutkowski.puzzle.board.ui.IBoardView
+import com.prutkowski.puzzle.exceptions.InvalidBoardDimensionsException
 import com.prutkowski.puzzle.dtos.BoardMatrix
 import com.prutkowski.puzzle.dtos.BoardSets
 import com.prutkowski.puzzle.dtos.MatrixCoordinates
 import com.prutkowski.puzzle.dtos.PuzzleHolder
-import java.util.ArrayList
-import kotlin.collections.LinkedHashMap
 
 class BoardPresenter(var view: IBoardView?) : IBoardPresenter {
 
     var boardMatrix = BoardMatrix()
 
-    override fun configureBoard(boardSets: BoardSets) {
-        if (validateBoardSets(boardSets))
+    override fun configureBoard(boardSets: BoardSets?) {
+        if (validBoardSets(boardSets))
             throw InvalidBoardDimensionsException()
 
         var index = 0
-        boardSets.imagesSet.forEach {
+        boardSets!!.imagesSet.forEach {
             boardMatrix.addPuzzleBoard(index, it.key, it.value)
             index++
         }
@@ -25,8 +24,9 @@ class BoardPresenter(var view: IBoardView?) : IBoardPresenter {
         view?.setupPuzzleHoldersClickListeners(boardMatrix.puzzleMatrix)
     }
 
-    private fun validateBoardSets(boardSets: BoardSets) =
-            boardSets.imagesSet.size != boardSets.dimension.x * boardSets.dimension.y
+    private fun validBoardSets(boardSets: BoardSets?): Boolean {
+        return boardSets != null && boardSets.imagesSet.size == boardSets.dimension.x * boardSets.dimension.y
+    }
 
     /*
      * TODO two dimmensional board
@@ -45,7 +45,7 @@ class BoardPresenter(var view: IBoardView?) : IBoardPresenter {
                 val foo = clickedPuzzleHolder.currentDrawableId
                 clickedPuzzleHolder.currentDrawableId = newPuzzleHolder.currentDrawableId
                 newPuzzleHolder.currentDrawableId = foo
-                view?.updateImagesBetweenHolders(clickedPuzzleHolder, newPuzzleHolder)
+                view?.switchImages(clickedPuzzleHolder, newPuzzleHolder)
             }
         }
     }
