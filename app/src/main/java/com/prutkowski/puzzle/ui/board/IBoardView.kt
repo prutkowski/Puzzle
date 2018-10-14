@@ -1,4 +1,4 @@
-package com.prutkowski.puzzle.board.ui
+package com.prutkowski.puzzle.ui.board
 
 import android.view.View
 import com.prutkowski.puzzle.dtos.MatrixCoordinates

@@ -1,4 +1,4 @@
-package com.prutkowski.puzzle.board
+package com.prutkowski.puzzle.ui.board
 
 import com.prutkowski.puzzle.dtos.BoardSets
 import com.prutkowski.puzzle.dtos.MatrixCoordinates

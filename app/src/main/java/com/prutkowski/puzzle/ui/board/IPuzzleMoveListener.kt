@@ -1,4 +1,4 @@
-package com.prutkowski.puzzle.board
+package com.prutkowski.puzzle.ui.board
 
 import android.view.View
 

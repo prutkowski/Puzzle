@@ -1,4 +1,4 @@
-package com.prutkowski.puzzle.board.ui
+package com.prutkowski.puzzle.ui.board
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -8,11 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.prutkowski.puzzle.R
-import com.prutkowski.puzzle.board.BoardPresenter
-import com.prutkowski.puzzle.board.IBoardPresenter
-import com.prutkowski.puzzle.board.IPuzzleMoveListener
-import com.prutkowski.puzzle.board.PuzzleMoveListener
-import com.prutkowski.puzzle.board.ui.helper.BoardBuilderHelper
+import com.prutkowski.puzzle.dtos.Dimension
+import com.prutkowski.puzzle.ui.board.helper.BoardBuilderHelper
 import com.prutkowski.puzzle.dtos.MatrixCoordinates
 import com.prutkowski.puzzle.dtos.PuzzleHolder
 
@@ -28,7 +25,7 @@ class BoardView : Fragment(), IBoardView {
 
         if (activity != null) {
             boardBuilderHelper = BoardBuilderHelper(activity!!.applicationContext)
-            boardBuilderHelper.buildBoard(rootView.findViewById(R.id.container))
+            boardBuilderHelper.buildBoard(rootView.findViewById(R.id.container), Dimension(3, 3))
             puzzleMoveListener = PuzzleMoveListener(this)
 
             presenter = BoardPresenter(this)

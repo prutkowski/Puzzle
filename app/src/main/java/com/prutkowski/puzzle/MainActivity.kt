@@ -2,7 +2,7 @@ package com.prutkowski.puzzle
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.prutkowski.puzzle.board.ui.BoardView
+import com.prutkowski.puzzle.ui.board.BoardView
 
 class MainActivity : AppCompatActivity() {
 

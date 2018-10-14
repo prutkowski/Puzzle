@@ -1,6 +1,5 @@
-package com.prutkowski.puzzle.board
+package com.prutkowski.puzzle.ui.board
 
-import com.prutkowski.puzzle.board.ui.IBoardView
 import com.prutkowski.puzzle.exceptions.InvalidBoardDimensionsException
 import com.prutkowski.puzzle.dtos.BoardMatrix
 import com.prutkowski.puzzle.dtos.BoardSets
@@ -12,7 +11,7 @@ class BoardPresenter(var view: IBoardView?) : IBoardPresenter {
     var boardMatrix = BoardMatrix()
 
     override fun configureBoard(boardSets: BoardSets?) {
-        if (validBoardSets(boardSets))
+        if (!validBoardSets(boardSets))
             throw InvalidBoardDimensionsException()
 
         var index = 0
