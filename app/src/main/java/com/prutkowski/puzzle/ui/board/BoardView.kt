@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.prutkowski.puzzle.R
 import com.prutkowski.puzzle.dtos.Dimension
 import com.prutkowski.puzzle.ui.board.helper.BoardBuilderHelper
@@ -24,8 +25,8 @@ class BoardView : Fragment(), IBoardView {
         rootView = inflater.inflate(R.layout.board_view_fragment, container, false)
 
         if (activity != null) {
-            boardBuilderHelper = BoardBuilderHelper(activity!!.applicationContext)
-            boardBuilderHelper.buildBoard(rootView.findViewById(R.id.container), Dimension(3, 3))
+            createBoard()
+
             puzzleMoveListener = PuzzleMoveListener(this)
 
             presenter = BoardPresenter(this)
@@ -33,6 +34,12 @@ class BoardView : Fragment(), IBoardView {
         }
 
         return rootView
+    }
+
+    private fun createBoard() {
+        boardBuilderHelper = BoardBuilderHelper(activity!!.applicationContext)
+        val board = boardBuilderHelper.build(Dimension(3, 3))
+        (rootView.findViewById(R.id.container) as LinearLayout).addView(board)
     }
 
     override fun onDestroy() {
