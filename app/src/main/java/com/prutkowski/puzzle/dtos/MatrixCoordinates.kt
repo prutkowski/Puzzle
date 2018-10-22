@@ -1,3 +1,3 @@
 package com.prutkowski.puzzle.dtos
 
-data class MatrixCoordinates(var column: Int, val row: Int)
+data class MatrixCoordinates(val row: Int, var column: Int)

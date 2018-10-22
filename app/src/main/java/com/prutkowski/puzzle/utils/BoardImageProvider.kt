@@ -1,22 +1,20 @@
 package com.prutkowski.puzzle.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.prutkowski.puzzle.dtos.Dimension
 import com.prutkowski.puzzle.dtos.PuzzleImage
-import android.graphics.BitmapFactory
-import android.graphics.Bitmap
 import com.prutkowski.puzzle.exceptions.ImageProviderException
 import java.io.IOException
 import java.io.InputStream
 
 
-class BoardImageProvider(private val context: Context): IBoardImageProvider {
+class BoardImageProvider(private val context: Context) : IBoardImageProvider {
     override fun getImageList(dimension: Dimension): ArrayList<PuzzleImage> {
-        val images = ArrayList<PuzzleImage>()
-        for (index in 0 until dimension.size())
-            images.add(PuzzleImage(getImageBitmap(index), index))
-
-        return images
+        return ArrayList((0 until dimension.size()).shuffled().map {
+            PuzzleImage(getImageBitmap(it), it)
+        })
     }
 
     private fun getImageBitmap(index: Int): Bitmap? {

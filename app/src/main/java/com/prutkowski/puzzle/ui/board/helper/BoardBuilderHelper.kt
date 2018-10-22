@@ -6,19 +6,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.prutkowski.puzzle.R
-import com.prutkowski.puzzle.dtos.BoardSets
-import com.prutkowski.puzzle.dtos.Dimension
-import com.prutkowski.puzzle.dtos.PuzzleImage
+import com.prutkowski.puzzle.dtos.*
 import com.prutkowski.puzzle.utils.BoardImageProvider
 import com.prutkowski.puzzle.utils.ViewUtils
 
 class BoardBuilderHelper(private val context: Context) : IBoardBuilderHelper {
-    private var boardSetup: BoardSets? = null
+    private lateinit var boardSetup: BoardInput
+    private var emptyDefaultPosition = MatrixCoordinates(1, 1)
 
     override fun getBoardSetup() = boardSetup
 
     override fun build(dimension: Dimension): LinearLayout {
-        val boardViewImages = LinkedHashMap<Int, Int>()
+        val puzzleHolders = LinkedHashMap<Int, PuzzleHolder>()
         val boardImageProvider = BoardImageProvider(context)
         val puzzleBitmaps = boardImageProvider.getImageList(dimension)
         val container = LinearLayout(context)
@@ -28,13 +27,13 @@ class BoardBuilderHelper(private val context: Context) : IBoardBuilderHelper {
         var counter = 0
         for (row in 0 until dimension.x) {
             val linearLayout = addRowContainer(row, container)
-            for (cell in 0 until dimension.y) {
-                createPuzzleHolder(Dimension(row, cell), dimension, linearLayout, boardViewImages, puzzleBitmaps[counter])
+            for (column in 0 until dimension.y) {
+                createPuzzleHolder(MatrixCoordinates(row, column), linearLayout, puzzleHolders, puzzleBitmaps[counter])
                 counter++
             }
         }
 
-        boardSetup = BoardSets(boardViewImages, dimension)
+        boardSetup = BoardInput(puzzleHolders, dimension, emptyDefaultPosition)
 
         return container
     }
@@ -50,21 +49,21 @@ class BoardBuilderHelper(private val context: Context) : IBoardBuilderHelper {
         return linearLayout
     }
 
-    private fun createPuzzleHolder(currentPosition: Dimension, boardDimensions: Dimension, container: ViewGroup, boardImages: LinkedHashMap<Int, Int>, image: PuzzleImage) {
+    private fun createPuzzleHolder(currentPosition: MatrixCoordinates, container: ViewGroup, puzzleHolders: LinkedHashMap<Int, PuzzleHolder>, image: PuzzleImage) {
         val imageView = ImageView(context)
         imageView.id = View.generateViewId()
         val lp = LinearLayout.LayoutParams(context.resources.getDimension(R.dimen.puzzleWidth).toInt(), context.resources.getDimension(R.dimen.puzzleHeight).toInt(), 0F)
-        if (currentPosition != Dimension(1, 1)) {
+        if (currentPosition != MatrixCoordinates(emptyDefaultPosition.row, emptyDefaultPosition.column)) {
             imageView.setImageBitmap(image.imageBitmap)
-            boardImages[imageView.id] = image.ImageId
+            puzzleHolders[imageView.id] = PuzzleHolder(imageView.id, image, currentPosition)
         } else {
             imageView.setImageDrawable(context.getDrawable(R.drawable.empty_puzzle))
-            boardImages[imageView.id] = R.drawable.empty_puzzle
+            puzzleHolders[imageView.id] = PuzzleHolder(imageView.id, null, currentPosition)
         }
 
         imageView.background = context.getDrawable(R.drawable.puzzle_holder_background)
         val margin = ViewUtils.dpToPx(1f, context.resources.displayMetrics)
-        if (currentPosition.y != 0)
+        if (currentPosition.column != 0)
             lp.leftMargin = margin
         imageView.layoutParams = lp
 

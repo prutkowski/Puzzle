@@ -49,7 +49,7 @@ class BoardView : Fragment(), IBoardView {
 
     override fun setupPuzzleHoldersClickListeners(puzzles: LinkedHashMap<MatrixCoordinates, PuzzleHolder>) {
         puzzles.forEach {
-            rootView.findViewById<ImageView>(it.value.holderId).setOnClickListener(puzzleMoveListener)
+            rootView.findViewById<ImageView>(it.value.holderId)?.setOnClickListener(puzzleMoveListener)
         }
     }
 
@@ -58,10 +58,16 @@ class BoardView : Fragment(), IBoardView {
     }
 
     override fun switchImages(fromHolder: PuzzleHolder, toHolder: PuzzleHolder) {
-        val fromDrawable = rootView.findViewById<ImageView>(fromHolder.holderId).drawable
-        val toDrawable = rootView.findViewById<ImageView>(toHolder.holderId).drawable
-        switchImage(fromHolder, toDrawable)
-        switchImage(toHolder, fromDrawable)
+        val fromImageView = rootView.findViewById<ImageView>(fromHolder.holderId)
+        val toImageView = rootView.findViewById<ImageView>(toHolder.holderId)
+
+        fromImageView.setImageBitmap(null)
+        toImageView.setImageDrawable(null)
+
+
+        fromImageView.setImageDrawable(context?.getDrawable(R.drawable.empty_puzzle))
+        toImageView.setImageBitmap(toHolder.currImage?.imageBitmap)
+
     }
 
     private fun switchImage(puzzleHolder: PuzzleHolder, drawable: Drawable) {
